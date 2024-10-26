@@ -18,7 +18,8 @@ void clear_screen(void)
     }
 }
 
-void handle_next_line(void) {
+void handle_next_line(void)
+{
     for (int i = (int)(vgaBuffPos / 160) + (vgaBuffPos % 160); i < 80 + (vgaBuffPos % 160); i++)
     {
         vgaBuff[i] = 0;
@@ -26,7 +27,7 @@ void handle_next_line(void) {
     }
 }
 
-void print_msg(char* msg)
+void print_msg(char* msg, unsigned char color)
 {
     /*
         Size of each VGA character = 16 bits
@@ -49,7 +50,7 @@ void print_msg(char* msg)
         }
 
         vgaBuff[vgaBuffPos] = msg[i];  // ASCII character is pushed into the buffer
-        vgaBuff[vgaBuffPos + 1] = 15; // Color of the character is pushed into the buffer
+        vgaBuff[vgaBuffPos + 1] = color; // Color of the character is pushed into the buffer
 
         ++i;             // Increment position in message string
         vgaBuffPos += 2; // Since we have used 2 indexes to make up a single character (ASCII character + color), we need to increment the position by 2

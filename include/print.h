@@ -3,4 +3,6 @@
 
 void clear_screen(void);
 void handle_next_line();
-void print_msg(char* msg);
+void print_msg(char* msg, unsigned char color);
+
+void delay(int time);
