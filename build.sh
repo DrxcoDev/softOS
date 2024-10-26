@@ -1,3 +1,5 @@
+mkdir bin
+nasm -f bin  bootloader/memory.asm -o bin/memory.bin
 nasm -f elf32 boot.asm -o boot.o
 gcc -m32 -c kernel.c -o kernel.o
 gcc -m32 -c ./src/print.c -o ./src/print.o
