@@ -12,7 +12,7 @@ Is a simple operative system with a simple bootloader and kernel
 1. `clone this repository`
 2. Input: `./build.sh`
 
-Only you can look a green text.
+- You will can look a green text.
 
 ## Only Memory
 1. `cd util`
