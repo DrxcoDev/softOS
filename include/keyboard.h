@@ -1,8 +1,7 @@
 #ifndef KEYBOARD_H
 #define KEYBOARD_H
 
-#define KEYBOARD_PORT 0x60 // Define el puerto del teclado
+void init_keyboard();
+char getchar();
 
-char get_input_keycode(void);
-
-#endif
+#endif // KEYBOARD_H

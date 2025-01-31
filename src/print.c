@@ -1,11 +1,7 @@
 #include "../include/print.h"
 
-#define VGA_WIDTH 80
-#define VGA_HEIGHT 25
-#define VGA_ADDRESS 0xB8000
-
-char *vgaBuff = (char *)VGA_ADDRESS; // VGA text buffer is located at physical address 0xb8000
-int vgaBuffPos = 0;                  // Position of VGA buffer
+char *vgaBuff = (char *)0xb8000; // VGA text buffer is located at physical address 0xb8000
+int vgaBuffPos = 0;              // Position of VGA buffer
 
 void clear_screen(void)
 {
@@ -44,14 +40,6 @@ void handle_next_line(void)
 }
 
 void print_msg(char* msg, unsigned char color) {
-    /*
-        Size of each VGA character = 16 bits
-        ASCII character = first 8 bits
-        Color of ASCII character = last 8 bits
-
-        For more information, please refer to https://en.wikipedia.org/wiki/VGA_text_mode
-    */
-
     int i = 0;
     int pos = vgaBuffPos; // Local variable to hold buffer position
 

@@ -1,21 +1,49 @@
-BITS 32 ; We are switching to protected mode after booting from the disk
-
-; There exists a standard for loading various x86 kernels using a bootloader called Multiboot specification
-
-SECTION .text
-    align   4
-    dd      0x1BADB002          ; This magic number value is used to indentify the header
-    dd      0x00                ; Flags
-    dd      - (0x1BADB002+0x00) ; Checksum value should be 0 when magic number is added to the flags
-
-GLOBAL start
-EXTERN kernel_main      ; We are declaring kernel_main as an external function
+BITS 16
+org 0x7c00
 
 start:
-    cli                 ; Clear interrupts
-    call kernel_main    ; We are calling kernel_main() from the kernel.c file
-    jmp end             ; We jump to the end after the function has been called
+    ; Configurar la pila
+    cli
+    xor ax, ax
+    mov ds, ax
+    mov es, ax
+    mov ss, ax
+    mov sp, 0x7c00
 
-end:
-    hlt                 ; Halt execution
-    jmp end             ; Jump back to end label
+    ; Configurar el modo protegido
+    lgdt [gdt_descriptor]
+    mov eax, cr0
+    or eax, 1
+    mov cr0, eax
+    jmp 0x08:protected_mode
+
+[bits 32]
+protected_mode:
+    ; Configurar los segmentos en modo protegido
+    mov ax, 0x10
+    mov ds, ax
+    mov es, ax
+    mov fs, ax
+    mov gs, ax
+    mov ss, ax
+    mov esp, 0x90000
+
+    ; Llamar a la funci�n kernel_main
+    call kernel_main
+
+hang:
+    jmp hang
+
+; GDT
+gdt_start:
+    dq 0x0000000000000000  ; Descriptor nulo
+    dq 0x00CF9A000000FFFF  ; C�digo: base=0, l�mite=4G, ejecutable, de solo lectura
+    dq 0x00CF92000000FFFF  ; Datos: base=0, l�mite=4G, de lectura/escritura
+
+gdt_end:
+gdt_descriptor:
+    dw gdt_end - gdt_start - 1
+    dd gdt_start
+
+times 510-($-$$) db 0
+dw 0xAA55

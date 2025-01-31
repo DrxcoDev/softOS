@@ -1,12 +1,7 @@
 #ifndef IO_H
 #define IO_H
 
-#include <stdint.h>
+unsigned char inb(unsigned short port);
+void outb(unsigned short port, unsigned char data);
 
-static inline uint8_t inb(uint16_t port) {
-    uint8_t result;
-    asm volatile ("inb %1, %0" : "=a" (result) : "Nd" (port));
-    return result;
-}
-
-#endif
+#endif // IO_H
