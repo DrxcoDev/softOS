@@ -43,8 +43,6 @@ void keyboard_handler() {
                 print_msg("\b \b", 0x07); // Borrar en pantalla
             } else if (c != '\b' && buffer_index < BUFFER_SIZE - 1) {
                 buffer[buffer_index++] = c;
-                char str[2] = {c, '\0'};
-                print_msg(str, 0x07); // Imprimir el car�cter en la pantalla
             }
         }
     }

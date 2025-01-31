@@ -8,7 +8,7 @@ static const int VGA_WIDTH = 80;
 static const int VGA_HEIGHT = 25;
 static int vga_row = 0;
 static int vga_column = 0;
-static uint8_t vga_color = COLOR_WHITE;
+static uint8_t vga_color = 0x07; // Color blanco
 
 static uint16_t vga_entry(unsigned char uc, uint8_t color) {
     return (uint16_t) uc | (uint16_t) color << 8;

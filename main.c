@@ -18,18 +18,18 @@ const uint32_t multiboot_header[] = {
 
 void kernel_main() {
     clear_screen();
-    print_msg("Kernel main has started!\n", 0x02);
+    print_msg("Kernel main has started!\n", 0x07);
 
     init_memory();   // Inicializamos la memoria
-    print_msg("Memory initialized.\n", 0x02);
+    print_msg("Memory initialized.\n", 0x07);
 
     init_idt();      // Inicializamos la IDT
-    print_msg("IDT initialized.\n", 0x02);
+    print_msg("IDT initialized.\n", 0x07);
 
     init_keyboard(); // Inicializamos el teclado
-    print_msg("Keyboard initialized.\n", 0x02);
+    print_msg("Keyboard initialized.\n", 0x07);
 
-    print_msg("Entering main loop.\n", 0x02);
+    print_msg("Entering main loop.\n", 0x07);
     char line[256];
     while (1) {
         print_prompt();

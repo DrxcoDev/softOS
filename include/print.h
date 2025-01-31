@@ -1,5 +1,6 @@
 #ifndef PRINT_H
 #define PRINT_H
+
 #include <stdint.h>
 
 void print_msg(const char *msg, uint8_t color);
