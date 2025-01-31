@@ -27,8 +27,7 @@ void handle_next_line(void)
     }
 }
 
-void print_msg(char* msg, unsigned char color)
-{
+void print_msg(char* msg, unsigned char color) {
     /*
         Size of each VGA character = 16 bits
         ASCII character = first 8 bits
@@ -38,21 +37,21 @@ void print_msg(char* msg, unsigned char color)
     */
 
     int i = 0;
+    int pos = vgaBuffPos; // Local variable to hold buffer position
 
-    while (msg[i] != '\0')
-    {
-        // In case of next line, handle_next_line() is executed
-        if (msg[i] == '\n')
-        {
+    while (msg[i] != '\0') {
+        if (msg[i] == '\n') {
             handle_next_line();
             i++;
             continue;
         }
 
-        vgaBuff[vgaBuffPos] = msg[i];  // ASCII character is pushed into the buffer
-        vgaBuff[vgaBuffPos + 1] = color; // Color of the character is pushed into the buffer
+        vgaBuff[pos] = msg[i];
+        vgaBuff[pos + 1] = color;
 
-        ++i;             // Increment position in message string
-        vgaBuffPos += 2; // Since we have used 2 indexes to make up a single character (ASCII character + color), we need to increment the position by 2
+        i++;
+        pos += 2;
     }
+
+    vgaBuffPos = pos; // Update global buffer position
 }
