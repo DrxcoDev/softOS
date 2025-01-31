@@ -1,8 +1,10 @@
-#define VGA_HEIGHT 25 // screen height
-#define VGA_WIDTH 80  // screen width
+#ifndef PRINT_H
+#define PRINT_H
+#include <stdint.h>
 
-void clear_screen(void);
-void handle_next_line();
-void print_msg(char* msg, unsigned char color);
+void print_msg(const char *msg, uint8_t color);
+void clear_screen();
 
-void delay(int time);
+#define COLOR_WHITE 0x07 // Definir el color blanco
+
+#endif // PRINT_H

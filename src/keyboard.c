@@ -58,7 +58,12 @@ void init_keyboard() {
 
 char getchar() {
     if (buffer_index > 0) {
-        return buffer[--buffer_index];
+        char c = buffer[0];
+        for (int i = 0; i < buffer_index - 1; i++) {
+            buffer[i] = buffer[i + 1];
+        }
+        buffer[--buffer_index] = '\0';
+        return c;
     }
     return 0;
 }

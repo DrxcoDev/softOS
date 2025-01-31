@@ -8,7 +8,7 @@
 #define MAX_COMMAND_LENGTH 256
 
 void print_prompt() {
-    print_msg("> ", 0x07);
+    print_msg("> ", COLOR_WHITE);
 }
 
 char* read_line() {
@@ -52,13 +52,17 @@ int execute_command(char** args) {
 }
 
 void read_line(char *line, int max_length) {
-    int i;
-    for (i = 0; i < max_length - 1; i++) {
+    int i = 0;
+    while (i < max_length - 1) {
         char c = getchar();
-        if (c == '\n' || c == '\r') {
-            break;
+        if (c) {
+            if (c == '\n' || c == '\r') {
+                break;
+            }
+            line[i++] = c;
+            char str[2] = {c, '\0'};
+            print_msg(str, 0x07);
         }
-        line[i] = c;
     }
     line[i] = '\0'; // Terminar la l�nea con un car�cter nulo
 }
