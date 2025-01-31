@@ -18,26 +18,33 @@ const uint32_t multiboot_header[] = {
 
 void kernel_main() {
     clear_screen();
-    init_memory();   // Inicializamos la memoria
-    init_idt();      // Inicializamos la IDT
-    init_keyboard(); // Inicializamos el teclado
-    print_msg("kernel_main() has been called!\n", 0x02);
+    print_msg("Kernel main has started!\n", 0x02);
 
+    init_memory();   // Inicializamos la memoria
+    print_msg("Memory initialized.\n", 0x02);
+
+    init_idt();      // Inicializamos la IDT
+    print_msg("IDT initialized.\n", 0x02);
+
+    init_keyboard(); // Inicializamos el teclado
+    print_msg("Keyboard initialized.\n", 0x02);
+
+    print_msg("Entering main loop.\n", 0x02);
+    char line[256];
     while (1) {
         print_prompt();
-        char *line = read_line();
-        if (line == NULL) {
-            print_msg("Error reading line\n", 0x04);
-            continue;
-        }
-        char **args = parse_line(line);
-        if (args == NULL) {
-            print_msg("Error parsing line\n", 0x04);
-            continue;
-        }
-        int status = execute_command(args);
-        if (status == 0) {
-            break; // Salir de la shell
+        read_line(line, sizeof(line));
+        print_msg("\n", 0x07); // Nueva l�nea despu�s de la entrada
+
+        // Procesar el comando ingresado
+        if (line[0] != '\0') {
+            char **args = parse_line(line);
+            if (args != NULL) {
+                int status = execute_command(args);
+                if (status == 0) {
+                    break; // Salir de la shell
+                }
+            }
         }
     }
 }

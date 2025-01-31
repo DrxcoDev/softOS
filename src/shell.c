@@ -5,6 +5,8 @@
 #include <stddef.h>
 #include <string.h>
 
+#define MAX_COMMAND_LENGTH 256
+
 void print_prompt() {
     print_msg("> ", 0x07);
 }
@@ -47,4 +49,16 @@ int execute_command(char** args) {
         print_msg("\n", 0x07);
     }
     return 1;  // Retorna 1 para continuar el loop de la shell
+}
+
+void read_line(char *line, int max_length) {
+    int i;
+    for (i = 0; i < max_length - 1; i++) {
+        char c = getchar();
+        if (c == '\n' || c == '\r') {
+            break;
+        }
+        line[i] = c;
+    }
+    line[i] = '\0'; // Terminar la l�nea con un car�cter nulo
 }
